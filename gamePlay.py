@@ -197,14 +197,15 @@ if __name__ == "__main__":
 		if (op == "-t"):
 			clockTime = float(opVal)
 			
-	exec("from " + args[1] + " import nextMove")
+	exec("from " + args[0] + " import nextMove")
 	p1 = nextMove
 	
-	exec("from " + args[0] + " import nextMove")
+	exec("from " + args[1] + " import nextMove")
 	p2 = nextMove
 
 	res = playGame(p1, p2, verbose, clockTime)
 	printBoard(res[2])
+	print "p1",args[0],"p2",args[1]
 	if ((res[0] > res[1]) and reversed != "R") or ((res[0] < res[1]) and reversed == "R"):
 		print "%s Wins %s Loses (%d to %d)" %(args[0], args[1], res[0], res[1]),
 	elif ((res[0] < res[1]) and reversed != "R") or ((res[0] > res[1]) and reversed == "R"):

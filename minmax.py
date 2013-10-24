@@ -1,7 +1,6 @@
 import random
 from gamePlay import valid, doMove, printBoard
 from copy import deepcopy
-from libxml2 import newValidCtxt
 
 
 
