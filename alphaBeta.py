@@ -51,7 +51,7 @@ def resultOfAction(kBoard, kColor, kNextMove):
 	
 	
 	
-def minValue(kBoard, kMaxDepth, kCurrentDepth, kColor):
+def minValue(kBoard, kMaxDepth, kCurrentDepth, kColor,alpha,beta):
 	"""
 	return min value for board
 	"""
@@ -94,7 +94,7 @@ def minValue(kBoard, kMaxDepth, kCurrentDepth, kColor):
 	
 	
 	
-def maxValue(kBoard, kMaxDepth, kCurrentDepth, kColor):
+def maxValue(kBoard, kMaxDepth, kCurrentDepth, kColor,alpha,beta):
 	"""
 	get return max value for board
 	"""
@@ -146,7 +146,10 @@ def nextMove(board, color, time):
     """
     Get the move and the maximun value
     """
-    value, move = maxValue(board, 2, 0, color) 
+
+	alpa = float("-inf")
+	beta = float("inf")
+    value, move = maxValue(board, 2, 0, color,alpha,beta) 
     print value, move
 #     if value == float("inf") or value == float("-inf"):
 #     	move = "pass"
