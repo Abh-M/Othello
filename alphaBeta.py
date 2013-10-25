@@ -17,11 +17,13 @@ def getAllPossibleMovesFromState(kBoard, color):
 			if valid(dupBoard, color, (i, j)):
 				moves.append((i, j))
 
+	"""
 	print "NEXT MOVE FOR COLOR ",color
 	print "NEXT MOVE FOR BOARD"
 	pprint.pprint(kBoard)
 	print"are"
 	pprint.pprint(moves)
+	"""
 	return moves
 
 
@@ -72,21 +74,18 @@ def minValue(kBoard, kMaxDepth, kCurrentDepth, kColor,alpha,beta):
 	causes.append(kMove)
 	states.append(kBoard)
 
+	actions = getAllPossibleMovesFromState(kBoard, kColor)
 	
-	
-	if kCurrentDepth == kMaxDepth:
-		return value(kBoard), None
+	if kCurrentDepth == kMaxDepth or len(actions)==0:
+		return value(kBoard), kMove
 	else:
-		print "FROM MIN VALUE"
-		actions = getAllPossibleMovesFromState(kBoard, kColor)
-        
-        for move in actions:
+		for move in actions:
 			orignalBoard = deepcopy(kBoard)
 			changedBoard = resultOfAction(orignalBoard, kColor, move)
 			
 			
-			if gameOver(changedBoard):
-				break
+# 			if gameOver(changedBoard):
+# 				break
 			
 			maxColor = "B" if kColor == "W" else "W"
 			newValue, newMove = maxValue(changedBoard, kMaxDepth, kCurrentDepth + 1, maxColor,alpha,beta)
@@ -94,7 +93,7 @@ def minValue(kBoard, kMaxDepth, kCurrentDepth, kColor,alpha,beta):
 			
 			
 			if newValue <= alpha:
-				print "PRUNING"
+				#print "PRUNING"
 				#raw_input()
 				return newValue,move
 			
@@ -127,35 +126,31 @@ def maxValue(kBoard, kMaxDepth, kCurrentDepth, kColor,alpha,beta):
 	values = []
 	causes = []
 	states = []
+	
+	values.append(kMaxValue)
+	causes.append(kMove)
+	states.append(kBoard)
+	
+	
+	actions = getAllPossibleMovesFromState(kBoard, kColor)
 
-        values.append(kMaxValue)
-        causes.append(kMove)
-        states.append(kBoard)
-
-	if kCurrentDepth == kMaxDepth:
-		return value(kBoard), None
+	if kCurrentDepth == kMaxDepth or len(actions)==0:
+		return value(kBoard), kMove
 	else:
-		
-
-        
-		print "FROM MIN VALUE"
-
-		
-        actions = getAllPossibleMovesFromState(kBoard, kColor)
-        for move in actions:
-        	orignalBoard = deepcopy(kBoard)
+		for move in actions:
+			orignalBoard = deepcopy(kBoard)
         	changedBoard = resultOfAction(orignalBoard, kColor, move)
         	
         	#check if gameover
-        	if gameOver(changedBoard):
-        		break;
+#         	if gameOver(changedBoard):
+#         		break;
         	
         	minColor = "B" if kColor == "W" else "W"
         	newValue, newMove = minValue(changedBoard, kMaxDepth, kCurrentDepth + 1, minColor,alpha,beta)
         	
         	
         	if newValue >= beta:
-        		print "PRUNING"
+        		#print "PRUNING"
         		#raw_input()
          		return newValue,move
         	
