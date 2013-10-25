@@ -65,10 +65,10 @@ def minValue(kBoard, kMaxDepth, kCurrentDepth, kColor):
 	causes.append(kMove)
 	states.append(kBoard)
 
+	actions = getAllPossibleMovesFromState(kBoard, kColor)
 	
-	
-	if kCurrentDepth == kMaxDepth:
-		return value(kBoard), None
+	if kCurrentDepth == kMaxDepth or len(actions)==0:
+		return value(kBoard), kMove
 	else:
 		actions = getAllPossibleMovesFromState(kBoard, kColor)
         
@@ -100,9 +100,11 @@ def maxValue(kBoard, kMaxDepth, kCurrentDepth, kColor):
 	"""
 	kMaxValue = float("-inf")
 	kMove = "pass"
+	
+	actions = getAllPossibleMovesFromState(kBoard, kColor)
 
-	if kCurrentDepth == kMaxDepth:
-		return value(kBoard), None
+	if kCurrentDepth == kMaxDepth or len(actions) == 0:
+		return value(kBoard), kMove
 	else:
 		
 		values = []
@@ -146,7 +148,7 @@ def nextMove(board, color, time):
     """
     Get the move and the maximun value
     """
-    value, move = maxValue(board, 2, 0, color) 
+    value, move = maxValue(board, 3, 0, color) 
     print value, move
 #     if value == float("inf") or value == float("-inf"):
 #     	move = "pass"

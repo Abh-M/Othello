@@ -1,20 +1,27 @@
 import random
-from gamePlay import valid, doMove, printBoard
+from gamePlay import valid, doMove, printBoard, gameOver
 from copy import deepcopy
-
+import pprint
 
 
 def getAllPossibleMovesFromState(kBoard, color):
 	"""
 	return array of moves (i,j)
 	"""
+	
 	moves = []
 
 	for i in range(8):
 		for j in range(8):
-			if valid(kBoard, color, (i, j)):
+			dupBoard = deepcopy(kBoard)
+			if valid(dupBoard, color, (i, j)):
 				moves.append((i, j))
 
+	print "NEXT MOVE FOR COLOR ",color
+	print "NEXT MOVE FOR BOARD"
+	pprint.pprint(kBoard)
+	print"are"
+	pprint.pprint(moves)
 	return moves
 
 
@@ -70,13 +77,30 @@ def minValue(kBoard, kMaxDepth, kCurrentDepth, kColor,alpha,beta):
 	if kCurrentDepth == kMaxDepth:
 		return value(kBoard), None
 	else:
+		print "FROM MIN VALUE"
 		actions = getAllPossibleMovesFromState(kBoard, kColor)
         
         for move in actions:
 			orignalBoard = deepcopy(kBoard)
 			changedBoard = resultOfAction(orignalBoard, kColor, move)
+			
+			
+			if gameOver(changedBoard):
+				break
+			
 			maxColor = "B" if kColor == "W" else "W"
-			newValue, newMove = maxValue(changedBoard, kMaxDepth, kCurrentDepth + 1, maxColor)
+			newValue, newMove = maxValue(changedBoard, kMaxDepth, kCurrentDepth + 1, maxColor,alpha,beta)
+			
+			
+			
+			if newValue <= alpha:
+				print "PRUNING"
+				#raw_input()
+				return newValue,move
+			
+			
+			beta = newValue if ( newValue < beta) else beta
+			
 			values.append(newValue)
 			causes.append(move)
 			states.append(changedBoard)
@@ -92,7 +116,7 @@ def minValue(kBoard, kMaxDepth, kCurrentDepth, kColor,alpha,beta):
 			
 	
 	
-	
+	 
 	
 def maxValue(kBoard, kMaxDepth, kCurrentDepth, kColor,alpha,beta):
 	"""
@@ -100,26 +124,44 @@ def maxValue(kBoard, kMaxDepth, kCurrentDepth, kColor,alpha,beta):
 	"""
 	kMaxValue = float("-inf")
 	kMove = "pass"
-
-	if kCurrentDepth == kMaxDepth:
-		return value(kBoard), None
-	else:
-		
-		values = []
-		causes = []
-		states = []
+	values = []
+	causes = []
+	states = []
 
         values.append(kMaxValue)
         causes.append(kMove)
         states.append(kBoard)
 
+	if kCurrentDepth == kMaxDepth:
+		return value(kBoard), None
+	else:
+		
 
+        
+		print "FROM MIN VALUE"
+
+		
         actions = getAllPossibleMovesFromState(kBoard, kColor)
         for move in actions:
         	orignalBoard = deepcopy(kBoard)
         	changedBoard = resultOfAction(orignalBoard, kColor, move)
+        	
+        	#check if gameover
+        	if gameOver(changedBoard):
+        		break;
+        	
         	minColor = "B" if kColor == "W" else "W"
-        	newValue, newMove = minValue(changedBoard, kMaxDepth, kCurrentDepth + 1, minColor)
+        	newValue, newMove = minValue(changedBoard, kMaxDepth, kCurrentDepth + 1, minColor,alpha,beta)
+        	
+        	
+        	if newValue >= beta:
+        		print "PRUNING"
+        		#raw_input()
+         		return newValue,move
+        	
+        	
+        	alpha = alpha if (alpha > newValue) else newValue
+        	
         	values.append(newValue)
         	causes.append(move)
         	states.append(changedBoard)
@@ -146,10 +188,9 @@ def nextMove(board, color, time):
     """
     Get the move and the maximun value
     """
-
-	alpa = float("-inf")
-	beta = float("inf")
-    value, move = maxValue(board, 2, 0, color,alpha,beta) 
+    alpha = float("-inf")
+    beta = float("inf")
+    value, move = maxValue(board, 3, 0, color,alpha,beta) 
     print value, move
 #     if value == float("inf") or value == float("-inf"):
 #     	move = "pass"

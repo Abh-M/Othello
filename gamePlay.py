@@ -161,9 +161,11 @@ def playGame(p1, p2, verbose = False, t = 128):
 		p1realTime = p1realTime - (t2 - t1)
 		if (p1realTime < 0):
 			if currColor == "B":
-				return (0,64, board, "Timeout")
+				pass
+				#return (0,64, board, "Timeout")
 			else:
-				return (64, 0, board, "Timeout")  
+				pass
+				#return (64, 0, board, "Timeout")  
 		if valid(board, currColor, nextMove):
 			doMove(board, currColor, nextMove)
 		else:
