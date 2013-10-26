@@ -245,8 +245,7 @@
 # 
 
 
-import random
-from gamePlay import valid, doMove, printBoard
+from gamePlay import valid, doMove
 from copy import deepcopy
 import pprint
 
