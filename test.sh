@@ -10,9 +10,11 @@ file=""
 
 
 
-command="$script"
-
+v=$3
 num_of_test=$2
+command="$script $3"
+
+
 
 get_player_name()
 {
