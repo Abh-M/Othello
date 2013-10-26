@@ -37,7 +37,7 @@ def evaluation(board):
             else:
                 value = value + 0
 
-    value = value + len(getAllPossibleMovesFromState(deepcopy(board), playerColor)) #- len(getAllPossibleMovesFromState(deepcopy(board), opponentColor)) 
+    value = value + len(getAllPossibleMovesFromState(deepcopy(board), playerColor)) - len(getAllPossibleMovesFromState(deepcopy(board), opponentColor)) 
     return value
 
 
