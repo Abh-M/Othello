@@ -22,38 +22,6 @@ def getAllPossibleMovesFromState(kBoard, color):
 
     return moves
 
-"""
-def converted(oldBoard,newBoard):
-    
-    val = 0;
-    return 0;
-    for i in range(8):
-        for j in range(8):
-            if oldBoard[i][j] == opponentColor and newBoard[i][j] == playerColor:
-                val = val + 1
-            elif oldBoard[i][j] == "." and newBoard[i][j] == playerColor:
-                val = val + 1
-        
-    return val
-
-def value(board):
-
-    value = 0
-    for row in board:
-        for elem in row:
-            if elem == "W":
-                value = value + 0
-            elif elem == "B":
-                value = value + 1
-            else:
-                value = value + 0.5
-    
-    
-
-
-    return value
-
-"""
 
 def evaluation(board):
     value = 0
@@ -69,7 +37,7 @@ def evaluation(board):
             else:
                 value = value + 0
 
-    value = value + len(getAllPossibleMovesFromState(deepcopy(board), playerColor)) - len(getAllPossibleMovesFromState(deepcopy(board), opponentColor)) 
+    value = value + len(getAllPossibleMovesFromState(deepcopy(board), playerColor)) #- len(getAllPossibleMovesFromState(deepcopy(board), opponentColor)) 
     return value
 
 
