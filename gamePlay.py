@@ -161,11 +161,9 @@ def playGame(p1, p2, verbose = False, t = 128):
 		p1realTime = p1realTime - (t2 - t1)
 		if (p1realTime < 0):
 			if currColor == "B":
-				pass
-				#return (0,64, board, "Timeout")
+				return (0,64, board, "Timeout")
 			else:
-				pass
-				#return (64, 0, board, "Timeout")  
+				return (64, 0, board, "Timeout")  
 		if valid(board, currColor, nextMove):
 			doMove(board, currColor, nextMove)
 		else:
@@ -191,23 +189,20 @@ if __name__ == "__main__":
 		print "Usage: python %s {-r} {-v} {-t time} payer1 player2" % (sys.argv[0])
 		exit()
 
-	verbose = True
+	verbose = False
 	clockTime = 320.0
 	for (op,opVal) in optlist:
 		if (op == "-v"):
 			verbose = True
 		if (op == "-t"):
 			clockTime = float(opVal)
-			
 	exec("from " + args[0] + " import nextMove")
 	p1 = nextMove
-	
 	exec("from " + args[1] + " import nextMove")
 	p2 = nextMove
 
 	res = playGame(p1, p2, verbose, clockTime)
 	printBoard(res[2])
-	print "p1",args[0],"p2",args[1]
 	if ((res[0] > res[1]) and reversed != "R") or ((res[0] < res[1]) and reversed == "R"):
 		print "%s Wins %s Loses (%d to %d)" %(args[0], args[1], res[0], res[1]),
 	elif ((res[0] < res[1]) and reversed != "R") or ((res[0] > res[1]) and reversed == "R"):
