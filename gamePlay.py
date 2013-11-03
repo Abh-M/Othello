@@ -189,8 +189,8 @@ if __name__ == "__main__":
 		print "Usage: python %s {-r} {-v} {-t time} payer1 player2" % (sys.argv[0])
 		exit()
 
-	verbose = False
-	clockTime = 320.0
+	verbose = True
+	clockTime = 64.0
 	for (op,opVal) in optlist:
 		if (op == "-v"):
 			verbose = True

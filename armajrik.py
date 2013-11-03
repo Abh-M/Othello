@@ -32,6 +32,10 @@ def evaluation(board):
                 value = value + 1
                 if (j==0 and (i==0 or i==7)) or (j==7 and (i==0 or i==7)):
                     value = value+8
+#                 elif (j==0 and (i in range(8))) or (j==7 and (i in range(8))):
+#                     value = value+4
+#                 elif ((i==0 or i==7) and (j in range(8))):
+#                     value = value+4
             elif elem == ".":
                 value = value + 0.5
             else:
@@ -175,9 +179,6 @@ def maxValue(kBoard, kMaxDepth, kCurrentDepth, kColor,alpha,beta):
 
 
 
-
-
-
 def nextMove(board, color, time):
     """
     Get the move and the maximun value
@@ -188,9 +189,66 @@ def nextMove(board, color, time):
     opponentColor = "W" if (color == "B") else "B"
     alpha = float("-inf")
     beta = float("inf")
-    value, move = maxValue(board, 3, 0, color,alpha,beta)	
-    print value, move
+    kBoard = deepcopy(board)
+    actions = getAllPossibleMovesFromState(kBoard, color)
+    p = len(actions)
+    l=3
+    if time < 10.0:
+        l = 2
+    elif time >30.0 and p>10:
+        l = 4
+    else:
+        l = 3;
+    #raw_input();
+    
+    value, move = maxValue(board, l, 0, color,alpha,beta)    
+    #print value, move
     return move
 
 
+
+
+
+
+
+# def nextMove(board, color, time):
+#     """
+#     Get the move and the maximun value
+#     """
+#     nextMove.limit = time if nextMove.limit == 0.0 else nextMove.limit
+#     nextMove.timediff = nextMove.oldTime - time
+#     nextMove.oldTime = time
+#     nextMove.counter = nextMove.counter + 1
+#     global opponentColor
+#     global playerColor
+#     playerColor = color
+#     opponentColor = "W" if (color == "B") else "B"
+#     alpha = float("-inf")
+#     beta = float("inf")
+#     kBoard = deepcopy(board)
+#     actions = getAllPossibleMovesFromState(kBoard, color)
+#     p = len(actions)
+# #    print "Counter: ",nextMove.counter,"LIMIT :",nextMove.limit,"OLD :",nextMove.oldTime,"CURR :",time,"DIFF :",nextMove.timediff," P :",p
+#     l=3
+#     if time < 10.0:
+#         l = 2
+#     elif time >30.0 and p>10:
+#         l = 4
+#     else:
+#         l = 3;
+#     #raw_input();
+#     
+#     value, move = maxValue(board, l, 0, color,alpha,beta)	
+#     #print value, move
+#     return move
+# 
+# 
+# 
+# #nextMoveWithTime
+# 
+# 
+# nextMove.oldTime = 0.0
+# nextMove.counter = 0
+# nextMove.timediff = 0.0
+# nextMove.limit = 0.0
 
