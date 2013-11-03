@@ -189,16 +189,16 @@ if __name__ == "__main__":
 		print "Usage: python %s {-r} {-v} {-t time} payer1 player2" % (sys.argv[0])
 		exit()
 
-	verbose = True
+	verbose = False
 	clockTime = 320.0
 	for (op,opVal) in optlist:
 		if (op == "-v"):
 			verbose = True
 		if (op == "-t"):
 			clockTime = float(opVal)
-	exec("from " + args[1] + " import nextMove")
-	p1 = nextMove
 	exec("from " + args[0] + " import nextMove")
+	p1 = nextMove
+	exec("from " + args[1] + " import nextMove")
 	p2 = nextMove
 
 	res = playGame(p1, p2, verbose, clockTime)
@@ -213,4 +213,3 @@ if __name__ == "__main__":
 		print res[3]
 	else:
 		print ""
-	 

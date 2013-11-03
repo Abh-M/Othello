@@ -1,4 +1,4 @@
-import gameplay
+import gamePlay
 from copy import deepcopy
 
 def value(board):
@@ -25,14 +25,14 @@ def nextMove(board, color, time, reversed = False):
     moves = []
     for i in range(8):
 	   for j in range(8):
-		  if gameplay.valid(board, color, (i,j)):
+		  if gamePlay.valid(board, color, (i,j)):
 			 moves.append((i,j))
     if len(moves) == 0:
 	   return "pass"
     best = None
     for move in moves:
 	   newBoard = deepcopy(board)
-	   gameplay.doMove(newBoard,color,move)
+	   gamePlay.doMove(newBoard,color,move)
 
 	   moveVal = value(newBoard)
 	   if best == None or betterThan(moveVal, best, color, reversed):
